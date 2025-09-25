@@ -1,18 +1,20 @@
-const knex = require('knex')({
+import knex from 'knex';
+
+const knexClient = knex({
   client: 'sqlite3', // or 'better-sqlite3'
   connection: {
     filename: './db.sqlite',
   },
 });
 
-class DB {
+export default class DB {
   static async addEmail(email) {
-    return knex('emails').insert(email)
+    return knexClient('emails').insert(email)
   }
 
   static async findEmails(searchString) {
     if (!searchString) return [];
-    return knex('emails')
+    return knexClient('emails')
       .where(function() {
         this.where('to', 'like', `%${searchString}%`)
           .orWhere('cc', 'like', `%${searchString}%`)
