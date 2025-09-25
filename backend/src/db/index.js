@@ -6,7 +6,19 @@ const knex = require('knex')({
 });
 
 class DB {
-  static async addLead(data) {
-    return knex('leads').insert(data);
+  static async addEmail(email) {
+    return knex('emails').insert(email)
+  }
+
+  static async findEmails(searchString) {
+    if (!searchString) return [];
+    return knex('emails')
+      .where(function() {
+        this.where('to', 'like', `%${searchString}%`)
+          .orWhere('cc', 'like', `%${searchString}%`)
+          .orWhere('bcc', 'like', `%${searchString}%`)
+          .orWhere('subject', 'like', `%${searchString}%`)
+          .orWhere('body', 'like', `%${searchString}%`);
+      });
   }
 }
