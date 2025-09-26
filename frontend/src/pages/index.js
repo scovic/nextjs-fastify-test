@@ -44,6 +44,7 @@ export default function Home() {
       <EmailList
         emails={emails}
         onSelectEmail={setSelectedEmail}
+        selectedEmail={selectedEmail}
         searchTerm={searchTerm}
         onSearchChange={setSearchTerm}
       />
