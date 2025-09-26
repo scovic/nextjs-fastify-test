@@ -17,9 +17,6 @@ export default function App({ Component, pageProps }) {
         <Link href="/">
           <EmailIcon />
         </Link>
-        <Link href="/leads">
-          <AccountBox />
-        </Link>
       </div>
       <main>
         <Component {...pageProps} />
