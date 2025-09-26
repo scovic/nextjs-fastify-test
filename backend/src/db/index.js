@@ -17,12 +17,13 @@ export default class DB {
   }
 
   static async findEmails(searchString) {
+    const query = this.knexClient('emails').orderBy('created_at', 'desc');
+
     if (!searchString) {
-      return this.knexClient('emails');
+      return query;
     }
 
-    return this.knexClient('emails')
-      .where(function() {
+    return query.where(function() {
         this.where('to', 'like', `%${searchString}%`)
           .orWhere('cc', 'like', `%${searchString}%`)
           .orWhere('bcc', 'like', `%${searchString}%`)
