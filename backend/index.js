@@ -1,5 +1,6 @@
 // ESM
 import Fastify from 'fastify';
+import cors from '@fastify/cors';
 import routes from './src/routes/index.js';
 
 /**
@@ -7,6 +8,11 @@ import routes from './src/routes/index.js';
  */
 const fastify = Fastify({
   logger: true
+});
+
+// Register CORS
+await fastify.register(cors, {
+  origin: '*'
 });
 
 fastify.register(routes);
