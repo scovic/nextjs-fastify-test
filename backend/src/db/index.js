@@ -1,7 +1,5 @@
 import knex from 'knex';
 
-// const knexClient = 
-
 export default class DB {
   static knexClient = knex({
     client: 'sqlite3', // or 'better-sqlite3'
@@ -11,11 +9,18 @@ export default class DB {
   });;
 
   static async addEmail(email) {
-    return this.knexClient('emails').insert(email)
+    const [insertedEmail] = await this.knexClient('emails')
+      .insert(email)
+      .returning('*');
+
+    return insertedEmail;
   }
 
   static async findEmails(searchString) {
-    if (!searchString) return [];
+    if (!searchString) {
+      return this.knexClient('emails');
+    }
+
     return this.knexClient('emails')
       .where(function() {
         this.where('to', 'like', `%${searchString}%`)
